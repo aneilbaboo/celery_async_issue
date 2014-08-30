@@ -49,7 +49,7 @@ def test_chord_chain_one_task(self):
 # Try Celery Master
 
 The current master branch (2fddb876e1b966c3540aadbbc2257dfd493abb85) fails
-every test with:
+every async test with:
 
 TypeError: group object got multiple values for keyword argument 'task_id'
 
