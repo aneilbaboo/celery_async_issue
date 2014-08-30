@@ -2,14 +2,14 @@ This project demonstrates a bug that occurs when a chain is added to a chord.
 There are 6 tests:
 
 
-| Test                         | async   | Result       |
-|----------------------------- | ------- | ------------ |
-| group() &#124; s()               | yes     |  pass        |
-| group() &#124; s() &#124; s()        | yes     | fail         |
-| group() &#124; s() &#124; s() &#124; s() | yes     | pass         |
-| group() &#124; s()               | no      |  pass        |
-| group() &#124; s() &#124; s()        | no      | pass         |
-| group() &#124; s() &#124; s() &#124; s() | no      | pass         |
+| Name | Test                         | async   | Result       |
+| ------ | ----------------------------- | ------- | ------------ |
+|test_chord | group() &#124; s()               | yes     |  pass        |
+|test_chord_chain_one_task | group() &#124; s() &#124; s()        | yes     | fail         |
+|test_chord_chain_two_tasks | group() &#124; s() &#124; s() &#124; s() | yes     | pass         |
+|test_chord_sync | group() &#124; s()               | no      |  pass        |
+|test_chord_chain_one_task_sync | group() &#124; s() &#124; s()        | no      | pass         |
+|test_chord_chain_two_tasks_sync | group() &#124; s() &#124; s() &#124; s() | no      | pass         |
 
 
 Strangely, only the asynchronous version of a chord followed by another task
