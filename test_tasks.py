@@ -26,7 +26,6 @@ class TestApplyAsync(TestCase):
         res = c.apply_async()
         self.assertEqual(res.get(), 12)
 
-
     def test_chord_chain_one_task(self):
         c = (group([add.si(2, 2), add.si(4, 4)])
              | add_list.s()
@@ -42,13 +41,20 @@ class TestApplyAsync(TestCase):
         res = c.apply_async()
         self.assertEqual(res.get(), 48)
 
+    def test_nested_group(self):
+        c = (group([add.si(2, 2), add.si(4, 4)])
+             | add_list.s()
+             | add.s(0)
+             | group([mul.s(2), mul.s(4)])
+             | add_list.s())
+        res = c.apply_async()
+        self.assertEqual(res.get(), 72)
+
     def test_chord_sync(self):
-        print("test_chord")
         c = (group([add.si(2, 2), add.si(4, 4)])
              | add_list.s())
         res = c.apply()
         self.assertEqual(res.get(), 12)
-
 
     def test_chord_chain_one_task_sync(self):
         c = (group([add.si(2, 2), add.si(4, 4)])
@@ -65,3 +71,11 @@ class TestApplyAsync(TestCase):
         res = c.apply()
         self.assertEqual(res.get(), 48)
 
+    def test_nested_group_sync(self):
+        c = (group([add.si(2, 2), add.si(4, 4)])
+             | add_list.s()
+             | add.s(0)
+             | group([mul.s(2), mul.s(4)])
+             | add_list.s())
+        res = c.apply()
+        self.assertEqual(res.get(), 72)
